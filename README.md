@@ -17,55 +17,36 @@ stored.
 5. Map the IP address with its MAC address and return the MAC address to client.
 P
 ## PROGRAM - ARP
-## CLIENT
+## SERVER
 ```
 import socket
 s = socket.socket()
 s.bind(('localhost', 8000))
 s.listen(5)
 print("Server is listening...")
-
 c, addr = s.accept()
 print(f"Connection established with {addr}")
-
-address = {
-    "165.165.80.80": "6A:08:AA:C2",
-    "165.165.79.1": "8A:BC:E3:FA"
-}
-
+address={"165.165.80.80":"6A:08:AA:C2","165.165.79.1":"8A:BC:E3:FA"};
 while True:
-    ip = c.recv(1024).decode()
-
-    if not ip:  
-        break
-
+    ip=c.recv(1024).decode()
     try:
-        mac = address[ip]  # Get the MAC address for the IP
-        print(f"IP: {ip} -> MAC: {mac}")
-        c.send(mac.encode())  
+        c.send(address[ip].encode())
     except KeyError:
-        print(f"IP: {ip} not found in ARP table.")
         c.send("Not Found".encode())
-c.close()
-s.close()
 ```
-## SERVER
+## CLIENT
 ```
 import socket
 c = socket.socket()
 c.connect(('localhost', 8000))
-
 while True:
     ip = input("Enter IP address to find MAC (or type 'exit' to quit): ")
-
     if ip.lower() == "exit":  
         break
-
     c.send(ip.encode())
     mac = c.recv(1024).decode()
     print(f"MAC Address for {ip}: {mac}")
 c.close()
-
 ```
 ## OUPUT - ARP
 <img width="1916" height="282" alt="Screenshot 2025-10-06 153826" src="https://github.com/user-attachments/assets/cfe96eb2-3bd8-4adb-a84d-ce5ab18ca716" />
