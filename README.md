@@ -52,8 +52,9 @@ c.close()
 <img width="1916" height="282" alt="Screenshot 2025-10-06 153826" src="https://github.com/user-attachments/assets/cfe96eb2-3bd8-4adb-a84d-ce5ab18ca716" />
 
 ## PROGRAM - RARP
-## CLIENT
-```import socket
+## SERVER
+```
+import socket
 s = socket.socket()
 s.bind(('localhost', 8000))
 s.listen(5)
@@ -82,7 +83,7 @@ while True:
 c.close()
 s.close()
 ```
-## SERVER
+## CLIENT
 ```
 import socket
 c = socket.socket()
